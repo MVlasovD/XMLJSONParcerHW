@@ -51,12 +51,12 @@ public class Main {
     }
 
 
-    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder dBuilder;
-    dBuilder = dbFactory.newDocumentBuilder();
-    Document doc = dBuilder.parse(new File(fileName));
-    DOMBuilder domBuilder = new DOMBuilder();
-        return domBuilder.build(doc);
+//    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+//    DocumentBuilder dBuilder;
+//    dBuilder = dbFactory.newDocumentBuilder();
+//    Document doc = dBuilder.parse(new File(fileName));
+//    DOMBuilder domBuilder = new DOMBuilder();
+//        return domBuilder.build(doc);
 
     private static List<Employee> parseXML(String fileNameXML) throws IOException, SAXException, ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -69,17 +69,17 @@ public class Main {
     }
 
 
-    Element root = jdomDoc.getRootElement();
-    List<Element> empListElements = root.getChildren("Employee");
-    List<Employee> empList = new ArrayList<>();
-            for (Element empElement : empListElements) {
-        Employee emp = new Employee();
-        emp.setId(Integer.parseInt(empElement.getAttributeValue("id")));
-        emp.setAge(Integer.parseInt(empElement.getChildText("age")));
-        emp.setName(empElement.getChildText("name"));
-        emp.setRole(empElement.getChildText("role"));
-        emp.setGender(empElement.getChildText("gender"));
-        empList.add(emp);
+//    Element root = jdomDoc.getRootElement();
+//    List<Element> empListElements = root.getChildren("Employee");
+//    List<Employee> empList = new ArrayList<>();
+//            for (Element empElement : empListElements) {
+//        Employee emp = new Employee();
+//        emp.setId(Integer.parseInt(empElement.getAttributeValue("id")));
+//        emp.setAge(Integer.parseInt(empElement.getChildText("age")));
+//        emp.setName(empElement.getChildText("name"));
+//        emp.setRole(empElement.getChildText("role"));
+//        emp.setGender(empElement.getChildText("gender"));
+//        empList.add(emp);
 
     private static void read(Node node) {
         NodeList nodeList = node.getChildNodes();
