@@ -51,88 +51,74 @@ public class Main {
     }
 
 
-//    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-//    DocumentBuilder dBuilder;
-//    dBuilder = dbFactory.newDocumentBuilder();
-//    Document doc = dBuilder.parse(new File(fileName));
-//    DOMBuilder domBuilder = new DOMBuilder();
-//        return domBuilder.build(doc);
+    static List<Employee> employees = new ArrayList<>();
 
-    private static List<Employee> parseXML(String fileNameXML) throws IOException, SAXException, ParserConfigurationException {
+    private static List<Employee> parseXML(String fileNameXML)
+            throws IOException, SAXException, ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document doc = builder.parse(new File(fileNameXML));
+
         Node root = doc.getDocumentElement();
         System.out.println("Корневой элемент: " + root.getNodeName());
         read(root);
-        return new ArrayList<Employee>();
+        return null;
     }
 
-
-//    Element root = jdomDoc.getRootElement();
-//    List<Element> empListElements = root.getChildren("Employee");
-//    List<Employee> empList = new ArrayList<>();
-//            for (Element empElement : empListElements) {
-//        Employee emp = new Employee();
-//        emp.setId(Integer.parseInt(empElement.getAttributeValue("id")));
-//        emp.setAge(Integer.parseInt(empElement.getChildText("age")));
-//        emp.setName(empElement.getChildText("name"));
-//        emp.setRole(empElement.getChildText("role"));
-//        emp.setGender(empElement.getChildText("gender"));
-//        empList.add(emp);
+    static StringBuilder sb = new StringBuilder();
+    static String jj;
 
     private static void read(Node node) {
         NodeList nodeList = node.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
-            Node node_ = nodeList.item(i);
-            if (Node.ELEMENT_NODE == node_.getNodeType()) {
-                System.out.println("Текущий узел: " + node_.getNodeName());
-                Element element = (Element) node_;
-                NamedNodeMap map = element.getAttributes();
-                System.out.println("ID сотрудника: " + element.getAttribute("id"));
+            Node ele = nodeList.item(i);
+            if (ele.getNodeType() != Node.TEXT_NODE) {
+                NodeList props = ele.getChildNodes();
+                for (int j = 0; j < props.getLength(); j++) {
+                    Node prop = props.item(j);
+                    if (prop.getNodeType() != Node.TEXT_NODE) {
+                        System.out.println(prop.getNodeName() + ":" + prop.getChildNodes().item(0).getTextContent());
+                        jj = String.valueOf(sb.append("\"" + prop.getNodeName() + "\"" + ":" +  "\"" + prop.getChildNodes().item(0).getTextContent() + "\""));
+//                        Element element = (Element) prop;
+//                        System.out.println(element.getAttribute(prop.getNodeName()));
+//                        employees.add(new Employee(Long.parseLong(attributes.getNamedItem("id").getNodeValue()),
+//                                attributes.getNamedItem("firstName").getNodeValue(), attributes.getNamedItem("lastName").getNodeValue(),
+//                                attributes.getNamedItem("country").getNodeValue(),Integer.parseInt(attributes.getNamedItem("firstName").getNodeValue())));
+                    }
+                }
+                System.out.println(jj);
+            }
+        }
+    }
 
-//                Employee emp = new Employee();
-//                emp.toString();
-//                emp.setId(Long.parseLong(element.getAttribute("id")));
 
+//        for (int i = 0; i < nodeList.getLength(); i++) {
+//            Node node_ = nodeList.item(i);
+//            if (Node.ELEMENT_NODE == node_.getNodeType()) {
+//                System.out.println("Текущий узел: " + node_.getNodeName());
+//                Element element = (Element) node_;
+//                NamedNodeMap map = element.getAttributes();
 //                for (int a = 0; a < map.getLength(); a++) {
 //                    String attrName = map.item(a).getNodeName();
 //                    String attrValue = map.item(a).getNodeValue();
 //                    System.out.println("Атрибут: " + attrName + "; значение: " + attrValue);
-//
-//                    Employee emp = new Employee();
-//                    emp.setId(Integer.parseInt(attrValue));
-//                    System.out.println(emp);
+//                }
+////                    read(node_);
 //            }
-            read(node_);
-        }
-    }
-    }
-
-//        List<Element> empListElements = root.getChildsNodes("Employee");
-//        List<Employee> empList = new ArrayList<>();
-//        for (Element empElement : empListElements) {
-//            Employee emp = new Employee();
-//            emp.setId(Integer.parseInt(empElement.getAttributeValue("id")));
-//            emp.setFirstName(empElement.getChildText("firstName"));
-//            emp.setLastName(empElement.getChildText("lastName"));
-//            emp.setCountry(empElement.getChildText("country"));
-//            emp.setAge(Integer.parseInt(empElement.getChildText("age")));
-//            empList.add(emp);
 //        }
+//    }
 
 
-    public static void main(String[] args) throws IOException, CsvException, ParserConfigurationException, SAXException {
+    public static void main(String[] args) throws
+            IOException, ParserConfigurationException, SAXException {
 
-        List<Employee> listXML = parseXML("data.xml");
+        parseXML("data.xml");
+//                List<Employee> listXML = parseXML("data.xml");
 
-//        String[] columnMapping = {"id", "firstName", "lastName", "country", "age"};
-//        String fileName = "data.csv";
-//        List<Employee> list = parseCSV(columnMapping, fileName);
 
-        String fileNameJson = "data2.json";
-//        String json = listToJson(listXML);
-//        writeString(json, fileNameJson);
+//                String fileNameJson = "data2.json";
+//                String json = listToJson(listXML);
+//                writeString(json, fileNameJson);
     }
 
 }
