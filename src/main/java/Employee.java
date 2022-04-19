@@ -1,5 +1,4 @@
 import lombok.*;
-
 @Getter
 @Setter
 @ToString
