@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -31,16 +32,18 @@ public class Main {
     }
 
     public static void writeString(String json, String fileNameJson) throws IOException {
-        FileWriter file = new FileWriter(fileNameJson);
-        file.write(json);
-        file.flush();
-        System.out.println(
-                "File " + "'" + fileNameXMLst + "'" + " converted into " + "'" + fileNameJson + "'");
+        try {
+            FileWriter file = new FileWriter(fileNameJson);
+            file.write(json);
+            file.flush();
+            System.out.println(
+                    "File " + "'" + fileNameXMLst + "'" + " converted into " + "'" + fileNameJson + "'");
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
-    private static List<Employee> employees = new ArrayList<>();
-
-    private static List<Employee> parseXML(String fileNameXML)
+    public static List<Employee> parseXML(String fileNameXML)
             throws IOException, SAXException, ParserConfigurationException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -69,13 +72,16 @@ public class Main {
     }
 
     private static String fileNameXMLst;
+    private static List<Employee> employees = new ArrayList<>();
 
-    public static void main(String[] args) throws
-            IOException, ParserConfigurationException, SAXException {
-
-        List<Employee> listXML = parseXML("data.xml");
-        String fileNameJson = "data2.json";
-        String json = listToJson(listXML);
-        writeString(json, fileNameJson);
+    public static void main(String[] args) {
+        try {
+            List<Employee> listXML = parseXML("data.xml");
+            String fileNameJson = "data2.json";
+            String json = listToJson(listXML);
+            writeString(json, fileNameJson);
+        } catch (IOException | ParserConfigurationException | SAXException exception) {
+            exception.printStackTrace();
+        }
     }
 }
