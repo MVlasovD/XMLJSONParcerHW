@@ -31,7 +31,7 @@ public class Main {
         return json;
     }
 
-    public static void writeString(String json, String fileNameJson) throws IOException {
+    public static void writeString(String json, String fileNameJson){
         try {
             FileWriter file = new FileWriter(fileNameJson);
             file.write(json);
@@ -43,14 +43,17 @@ public class Main {
         }
     }
 
-    public static List<Employee> parseXML(String fileNameXML)
-            throws IOException, SAXException, ParserConfigurationException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = factory.newDocumentBuilder();
-        Document doc = builder.parse(new File(fileNameXML));
-        fileNameXMLst = fileNameXML;
-        Node root = doc.getDocumentElement();
-        read(root);
+    public static List<Employee> parseXML(String fileNameXML){
+        try {
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document doc = builder.parse(new File(fileNameXML));
+            fileNameXMLst = fileNameXML;
+            Node root = doc.getDocumentElement();
+            read(root);
+        } catch (IOException | SAXException | ParserConfigurationException exception) {
+            exception.printStackTrace();
+        }
         return employees;
     }
 
@@ -75,13 +78,9 @@ public class Main {
     private static List<Employee> employees = new ArrayList<>();
 
     public static void main(String[] args) {
-        try {
-            List<Employee> listXML = parseXML("data.xml");
-            String fileNameJson = "data2.json";
-            String json = listToJson(listXML);
-            writeString(json, fileNameJson);
-        } catch (IOException | ParserConfigurationException | SAXException exception) {
-            exception.printStackTrace();
-        }
+        List<Employee> listXML = parseXML("data.xml");
+        String fileNameJson = "data2.json";
+        String json = listToJson(listXML);
+        writeString(json, fileNameJson);
     }
 }

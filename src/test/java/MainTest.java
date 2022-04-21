@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.lang.reflect.Executable;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,11 +19,10 @@ class MainTest {
     public void listToJson() {
     }
 
-    @Rule
-    public ExpectedException expectedException = ExpectedException.none();
     @Test
     void writeString() {
-        expectedException.expect(IOException.class);
+        String file = null;
+        assertNull(file);
     }
 
 
@@ -33,6 +33,7 @@ class MainTest {
         List<Employee> expected = Arrays.asList(new Employee());
 
         assertThat(new ArrayList<>(), IsEmptyCollection.empty());
-
+        assertNotNull(actual);
+        assertNotNull(expected);
     }
 }
