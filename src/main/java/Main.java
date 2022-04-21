@@ -57,7 +57,7 @@ public class Main {
         return employees;
     }
 
-    private static void read(Node node) {
+    public static void read(Node node) {
         NodeList nodeList = node.getChildNodes();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node ele = nodeList.item(i);
